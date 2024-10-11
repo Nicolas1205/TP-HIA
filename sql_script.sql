@@ -1,6 +1,21 @@
 -- Crear la base de datos
-CREATE DATABASE sistema_empleados;
-USE sistema_empleados;
+-- CREATE DATABASE db;
+-- USE sistema_empleados;
+
+-- Tabla de Categoría (Debe ser creada primero ya que es referenciada)
+CREATE TABLE categorias (
+    id_categoria INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_categoria VARCHAR(50),
+    fecha_designacion DATE,
+    resolucion VARCHAR(100)
+);
+
+-- Tabla de Funciones (Debe ser creada antes de que sea referenciada)
+CREATE TABLE funciones (
+    id_funcion INT PRIMARY KEY AUTO_INCREMENT,
+    nombre_funcion VARCHAR(100),
+    descripcion_funcion TEXT
+);
 
 -- Tabla de Empleados (Registro de empleados)
 CREATE TABLE empleados (
@@ -54,21 +69,6 @@ CREATE TABLE grupo_familiar (
     vinculo VARCHAR(50),
     id_empleado INT,
     FOREIGN KEY (id_empleado) REFERENCES empleados(id_empleado)
-);
-
--- Tabla de Categoría
-CREATE TABLE categorias (
-    id_categoria INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_categoria VARCHAR(50),
-    fecha_designacion DATE,
-    resolucion VARCHAR(100)
-);
-
--- Tabla de Funciones
-CREATE TABLE funciones (
-    id_funcion INT PRIMARY KEY AUTO_INCREMENT,
-    nombre_funcion VARCHAR(100),
-    descripcion_funcion TEXT
 );
 
 -- Tabla de Tardanzas
