@@ -7,6 +7,7 @@ services:
       cluster:
         ipv4_address: 192.168.0.5
 
+
   management1:
     image: mysql/mysql-cluster
     command: ndb_mgmd
@@ -30,12 +31,19 @@ services:
 
   mysql1:
     image: mysql/mysql-cluster
+      #entrypoint:
+      #- "mysql -u root -pnicolas db < /sql_script.sql"
     command: mysqld
     environment:
       MYSQL_ROOT_PASSWORD: nicolas
+      MYSQL_DATABASE: db
     networks:
       cluster:
         ipv4_address: 192.168.0.10
+    volumes:
+      - ./sql_script.sql:/docker-entrypoint-initdb.d/sql_script.sql
+      - ./privileges.sql:/docker-entrypoint-initdb.d/privileges.sql
+
 
 networks:
   cluster:
