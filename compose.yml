@@ -6,8 +6,12 @@ services:
     networks:
       cluster:
         ipv4_address: 192.168.0.5
-
-
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    networks:
+      cluster:
+        ipv4_address: 192.168.0.7
   management1:
     image: mysql/mysql-cluster
     command: ndb_mgmd
