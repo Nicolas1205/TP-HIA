@@ -1,6 +1,42 @@
+Table domicilio{
+  id_domicio int [pk , increment]
+  calle varchar(100)
+  numero int(10)
+  barrio varchar(50)
+  localidad varchar(50) 
+  provincia varchar(50)
+   id_empleado int [ref: - empleados.id_emp]
+}
+Table partes {
+    id_parte int [pk, increment]
+    tipo_parte varchar(100)
+    fecha_inicio date
+    fecha_fin date
+    observacion text
+    estado varchar(50)
+    id_emp int [ref: > empleados.id_emp]
+}
+Table diagnosticos_medicos {
+    id_diagnostico int [pk, increment]
+    diagnostico text
+    dias_establecidos int
+    id_parte int [ref: > partes.id_parte]
+}
+Table titulo {
+  id_titulo int [pk, increment]
+    nombre_titulo varchar(100)
+    facultad varchar(100)
+    universidad varchar(100)
+}
+Table titulo_Emp {
+  id_tituloemp int [pk, increment]
+    id_titulo int [ref: > titulo.id_titulo]
+    fecha date
+    id_empleado int [ref: > empleados.id_emp]
+}
 Table empleados {
-    id_empleado int [pk, increment]
-    apellido varchar(50)
+  id_emp int [pk , increment]
+  apellido varchar(50)
     nombre varchar(50)
     dni varchar(15) [unique]
     cuil varchar(15) [unique]
@@ -10,27 +46,67 @@ Table empleados {
     nivel_estudio varchar(50)
     nacionalidad varchar(50)
 }
-
-Table datos_laborales {
-    id_laboral int [pk, increment]
-    legajo varchar(20)
+Table sancion {
+   id_sancion int [pk, increment]
+    nombre_sancion varchar(100)
+    articulo varchar(100)
+    observacion text
+    fecha date
+    id_empleado int [ref: > empleados.id_emp]
+}
+Table asistencia {
+  id_asistencia integer [pk, increment]
+  hora time
+  fecha date
+   id_empleado int [ref: > empleados.id_emp]
+}
+Table tardanza {
+id_tardanza integer [pk, increment]
+  hora time
+  fecha date
+  observacion text
+  id_empleado int [ref: > empleados.id_emp]
+}
+Table categoria {
+  id_categoria int [pk, increment]
+    nombre_categoria varchar(50)
+    fecha_designacion date
+    resolucion varchar(100)
+}
+Table ascenso {
+  id_ascenso integer [pk,increment]
+  categoriavieja int [ref: > categoria.id_categoria]
+    categorianueva int [ref: > categoria.id_categoria]
+    fecha date
+    id_empleado int [ref: > empleados.id_emp]
+}
+Table departamento {
+  id_dep integer [pk,increment]
+  nombre varchar (50)
+  descripcion text 
+  area varchar(50)
+}
+Table historaldep {
+  id_historialdep integer [pk,increment]
+  fecha date
+  id_empleado int [ref: > empleados.id_emp]
+  id_dep int [ref: > departamento.id_dep]
+}
+Table dlaborales {
+  id_datoslaborales integer [pk,increment]
+      legajo varchar(20)
     fecha_ingreso date
-    id_categoria int [ref: > categorias.id_categoria]
+    id_categoria int [ref: > categoria.id_categoria]
     id_funcion int [ref: > funciones.id_funcion]
     departamento_asignado varchar(100)
     horario_trabajo varchar(50)
     turno varchar(20)
-    id_empleado int [ref: > empleados.id_empleado]
+    id_empleado int [ref: - empleados.id_emp]
 }
-
-Table domicilios {
-    id_domicilio int [pk, increment]
-    calle varchar(100)
-    numero varchar(10)
-    barrio varchar(50)
-    localidad varchar(50)
-    provincia varchar(50)
-    id_empleado int [ref: > empleados.id_empleado]
+Table funciones {
+    id_funcion int [pk, increment]
+    nombre_funcion varchar(100)
+    descripcion_funcion text
 }
 
 Table grupo_familiar {
@@ -40,37 +116,7 @@ Table grupo_familiar {
     fecha_nacimiento date
     dni varchar(15)
     vinculo varchar(50)
-    id_empleado int [ref: > empleados.id_empleado]
-}
-
-Table categorias {
-    id_categoria int [pk, increment]
-    nombre_categoria varchar(50)
-    fecha_designacion date
-    resolucion varchar(100)
-}
-
-Table funciones {
-    id_funcion int [pk, increment]
-    nombre_funcion varchar(100)
-    descripcion_funcion text
-}
-
-Table tardanzas {
-    id_tardanza int [pk, increment]
-    fecha date
-    hora time
-    id_empleado int [ref: > empleados.id_empleado]
-}
-
-Table partes_novedades {
-    id_parte int [pk, increment]
-    tipo_parte varchar(100)
-    fecha_inicio date
-    fecha_fin date
-    observacion text
-    estado varchar(50)
-    id_empleado int [ref: > empleados.id_empleado]
+    id_empleado int [ref: > empleados.id_emp]
 }
 
 Table fichas_medicas {
@@ -78,23 +124,7 @@ Table fichas_medicas {
     antecedentes_medicos text
     alergia_medico text
     factor_sangre varchar(5)
-    id_empleado int [ref: > empleados.id_empleado]
-}
-
-Table diagnosticos_medicos {
-    id_diagnostico int [pk, increment]
-    diagnostico text
-    dias_establecidos int
-    id_parte int [ref: > partes_novedades.id_parte]
-}
-
-Table sanciones {
-    id_sancion int [pk, increment]
-    nombre_sancion varchar(100)
-    articulo varchar(100)
-    observacion text
-    fecha date
-    id_empleado int [ref: > empleados.id_empleado]
+    id_empleado int [ref: > empleados.id_emp]
 }
 
 Table expedientes {
@@ -104,7 +134,7 @@ Table expedientes {
     libro varchar(50)
     tomo varchar(50)
     fojas varchar(50)
-    id_empleado int [ref: > empleados.id_empleado]
+    id_empleado int [ref: - empleados.id_emp]
 }
 
 Table tramites_expedientes {
@@ -113,11 +143,4 @@ Table tramites_expedientes {
     id_expediente int [ref: > expedientes.id_expediente]
 }
 
-Table titulos {
-    id_titulo int [pk, increment]
-    nombre_titulo varchar(100)
-    facultad varchar(100)
-    universidad varchar(100)
-    fecha_obtencion date
-    id_empleado int [ref: > empleados.id_empleado]
-}
+
