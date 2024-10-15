@@ -8,7 +8,7 @@ services:
       cluster:
         ipv4_address: 192.168.0.5
     volumes:
-      - ./grafana-datasource-config.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+      - ./grafana/grafana-datasource-config.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
 
   prometheus:
     image: prom/prometheus
@@ -31,7 +31,7 @@ services:
      - --config.my-cnf=/cfg/.my.cnf
      - --mysqld.address=192.168.0.10:3306
     volumes:
-      - ./config.my-cnf:/cfg/.my.cnf
+      - ./mysql/config.my-cnf:/cfg/.my.cnf
     ports:
       - 9104:9104
     networks:
@@ -92,8 +92,8 @@ services:
       cluster:
         ipv4_address: 192.168.0.10
     volumes:
-      - ./sql_script.sql:/docker-entrypoint-initdb.d/sql_script.sql
-      - ./privileges.sql:/docker-entrypoint-initdb.d/privileges.sql
+      - ./mysql/sql_script.sql:/docker-entrypoint-initdb.d/sql_script.sql
+      - ./mysql/privileges.sql:/docker-entrypoint-initdb.d/privileges.sql
 
 
 networks:
