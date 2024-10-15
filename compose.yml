@@ -23,8 +23,24 @@ services:
     ports:
       - 9090:9090
 
+  mysql-exporter:
+    image: prom/mysqld-exporter
+    container_name: mysql-exporter
+    hostname: mysql-exporter
+    command:
+     - --config.my-cnf=/cfg/.my.cnf
+     - --mysqld.address=192.168.0.10:3306
+    volumes:
+      - ./config.my-cnf:/cfg/.my.cnf
+    ports:
+      - 9104:9104
+    networks:
+      cluster:
+        ipv4_address: 192.168.0.13
+
   cadvisor:
       image: gcr.io/cadvisor/cadvisor:latest
+      container_name: cadvisor
       hostname: cadvisor
       platform: linux/aarch64
       volumes:
@@ -38,7 +54,6 @@ services:
       networks:
         cluster:
           ipv4_address: 192.168.0.6
-
 
   management1:
     image: mysql/mysql-cluster

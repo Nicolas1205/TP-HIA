@@ -6,3 +6,15 @@ datasources:
     access: proxy
     url: http://192.168.0.7:9090
     isDefault: true
+  - name: MySQL
+    type: mysql
+    url: 192.168.0.10:3306
+    user: root
+    jsonData:
+      database: grafana
+      maxOpenConns: 100
+      maxIdleConns: 100
+      maxIdleConnsAuto: true
+      connMaxLifetime: 14400
+    secureJsonData:
+      password: nicolas
