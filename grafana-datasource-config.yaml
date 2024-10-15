@@ -11,7 +11,7 @@ datasources:
     url: 192.168.0.10:3306
     user: root
     jsonData:
-      database: grafana
+      database: db 
       maxOpenConns: 100
       maxIdleConns: 100
       maxIdleConnsAuto: true
