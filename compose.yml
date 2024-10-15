@@ -1,19 +1,48 @@
 services:
   grafana:
     image: grafana/grafana
+    container_name: grafana
     ports:
       - "3000:3000"
     networks:
       cluster:
         ipv4_address: 192.168.0.5
+    volumes:
+      - ./grafana-datasource-config.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     networks:
       cluster:
         ipv4_address: 192.168.0.7
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - 9090:9090
+
+  cadvisor:
+      image: gcr.io/cadvisor/cadvisor:latest
+      hostname: cadvisor
+      platform: linux/aarch64
+      volumes:
+        - "/:/rootfs:ro"
+        - "/var/run:/var/run:ro"
+        - "/sys:/sys:ro"
+        - "/var/lib/docker/:/var/lib/docker:ro"
+        - "/dev/disk/:/dev/disk:ro"
+      ports:
+        - "8080:8080"
+      networks:
+        cluster:
+          ipv4_address: 192.168.0.6
+
+
   management1:
     image: mysql/mysql-cluster
+    container_name: management1
     command: ndb_mgmd
     networks:
       cluster:
@@ -21,6 +50,7 @@ services:
 
   ndb1:
     image: mysql/mysql-cluster
+    container_name: ndb1
     command: ndbd
     networks:
       cluster:
@@ -28,6 +58,7 @@ services:
 
   ndb2:
     image: mysql/mysql-cluster
+    container_name: ndb2
     command: ndbd
     networks:
       cluster:
@@ -35,6 +66,7 @@ services:
 
   mysql1:
     image: mysql/mysql-cluster
+    container_name: mysql1
       #entrypoint:
       #- "mysql -u root -pnicolas db < /sql_script.sql"
     command: mysqld

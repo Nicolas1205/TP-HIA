@@ -3,7 +3,7 @@
 SELECT host FROM mysql.user WHERE User = 'root';
 
 ```sql
-CREATE USER 'root'@'%' IDENTIFIED BY 'some_pass';
+CREATE USER 'root'@'%' IDENTIFIED BY 'nicolas';
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%';
 FLUSH PRIVILEGES;
 ```
