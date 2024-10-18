@@ -96,6 +96,7 @@ services:
       - ./mysql/privileges.sql:/docker-entrypoint-initdb.d/privileges.sql
       - ./mysql/my.cnf/my.cnf:/etc/mysql/conf.d/my.cnf
 
+
   sb-prepare:
     image: severalnines/sysbench
     container_name: sb-prepare
@@ -139,6 +140,28 @@ services:
     depends_on:
       - mysql1
       - sb-prepare
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql1
+      MYSQL_ROOT_PASSWORD: nicolas
+    depends_on:
+      - mysql1
+    ports:
+      - "8081:80"
+    networks:
+      cluster:
+        ipv4_address: 192.168.0.12
+
+
+
+
+
+
+
+
 
 networks:
   cluster:
