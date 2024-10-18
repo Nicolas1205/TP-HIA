@@ -94,7 +94,7 @@ services:
     volumes:
       - ./mysql/sql_script.sql:/docker-entrypoint-initdb.d/sql_script.sql
       - ./mysql/privileges.sql:/docker-entrypoint-initdb.d/privileges.sql
-      - ./mysql/my.cnf/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./mysql/my.cnf/my.cnf:/etc/my.cnf
 
 
   sb-prepare:
