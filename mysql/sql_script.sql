@@ -17,6 +17,21 @@ CREATE TABLE funciones (
     descripcion_funcion TEXT
 );
 
+-- Tabla de Empleados (Registro de empleados)
+CREATE TABLE empleados (
+    id_empleado INT PRIMARY KEY AUTO_INCREMENT,
+    apellido VARCHAR(50),
+    nombre VARCHAR(50),
+    dni VARCHAR(15) UNIQUE,
+    cuil VARCHAR(15) UNIQUE,
+    fecha_nacimiento DATE,
+    sexo VARCHAR(10),
+    estado_civil VARCHAR(20),
+    nivel_estudio VARCHAR(50),
+    nacionalidad VARCHAR(50),
+    estado VARCHAR(20)
+);
+
 CREATE TABLE ascensos (
     id_ascenso INT PRIMARY KEY AUTO_INCREMENT,
     id_empleado INT,
@@ -37,21 +52,6 @@ CREATE TABLE asistencia (
     estado VARCHAR(20), -- Por ejemplo: 'presente', 'ausente', 'tarde'
     observaciones TEXT,
     FOREIGN KEY (id_empleado) REFERENCES empleados(id_empleado)
-);
-
--- Tabla de Empleados (Registro de empleados)
-CREATE TABLE empleados (
-    id_empleado INT PRIMARY KEY AUTO_INCREMENT,
-    apellido VARCHAR(50),
-    nombre VARCHAR(50),
-    dni VARCHAR(15) UNIQUE,
-    cuil VARCHAR(15) UNIQUE,
-    fecha_nacimiento DATE,
-    sexo VARCHAR(10),
-    estado_civil VARCHAR(20),
-    nivel_estudio VARCHAR(50),
-    nacionalidad VARCHAR(50),
-    estado VARCHAR(20)
 );
 
 -- Tabla de Datos Laborales
